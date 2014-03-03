@@ -28,7 +28,7 @@ public:
 	LuaWrapper();
 	~LuaWrapper();
 
-	bool isValid()						{	return NULL != m_luaState;		}
+	bool isValid()					{	return NULL != m_luaState;						}
 	/*打开需要使用的库*/
 	inline	bool openBase()			{	luaopen_base(m_luaState);		return true;	}
 	inline	bool openCoroutine()	{	luaopen_coroutine(m_luaState);	return true;	}
@@ -50,9 +50,18 @@ public:
 	
 	template<typename VariableType>
 	bool setGloabal(const char* szGlobalVariableName, VariableType Value);
-	
+
+	template<typename VariableType>
+	VariableType getTableField(const char* szTableName,	const char*	szFieldName);
+
+	template<typename VariableType>
+	bool setTableField(const char* szTableName,	const char*	szFieldName, VariableType Value);
+
 	bool callLuaFunc(const char* szFuncName, const char* sig, ...);
 
+	bool registerFunc(const char* regFuncName, lua_CFunction regCFunc);
+protected:
+	bool loadTable(const char* szTableName);
 private:
 	lua_State*	m_luaState;
 };
