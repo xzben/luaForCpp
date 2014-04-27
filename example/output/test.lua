@@ -25,5 +25,3 @@ function testTablePrint(...)
 	print(arg);
 	--io.write(string.format(fmt, unpack(arg)));
 end
-
-testTablePrint("test", 1, 2, 3 );
