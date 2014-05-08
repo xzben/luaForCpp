@@ -61,6 +61,7 @@ bool LuaWrapper::openDebug()		{ luaopen_debug(m_luaState);		return true; }
 bool LuaWrapper::openPackage()		{ luaopen_package(m_luaState);		return true; }
 bool LuaWrapper::openAllLib()		{ luaL_openlibs(m_luaState);		return true; }
 
+bool LuaWrapper::openLib(char const* szLibName, const luaLib_Reg* libTable, int nup) { luaL_openlib(m_luaState, szLibName, (const luaL_Reg*)libTable, nup); return true; }
 /******************************向栈中压入元素*************************************/
 void	LuaWrapper::pushNil()									{	lua_pushnil(m_luaState);					}
 void	LuaWrapper::pushBoolean(bool bValue)					{	lua_pushboolean(m_luaState, bValue);		}
@@ -84,6 +85,14 @@ int	 LuaWrapper::type(int nIndex)							{	return lua_type(m_luaState, nIndex);		
 double			LuaWrapper::toNumber(int nIndex)			{	return lua_tonumber(m_luaState, nIndex);	}
 std::string		LuaWrapper::toString(int nIndex)			{	return lua_tostring(m_luaState, nIndex);	}
 bool			LuaWrapper::toBoolean(int nIndex)			{	return lua_toboolean(m_luaState, nIndex);	}
+void*			LuaWrapper::touserdata(int nIndex)			{	return lua_touserdata(m_luaState, nIndex);	}
+
+int				LuaWrapper::checkint(int nIndex)			{	return luaL_checkint(m_luaState, nIndex);	}
+double			LuaWrapper::checknumber(int nIndex)			{	return luaL_checknumber(m_luaState, nIndex); }
+long			LuaWrapper::checklong(int nIndex)			{	return luaL_checklong(m_luaState, nIndex);	}
+char const*		LuaWrapper::checklstring(int nIndex, size_t *pnLen)		{ return luaL_checklstring(m_luaState, nIndex, pnLen);  }
+void*			LuaWrapper::checkudata(int nIndex, char const* tname)	{ return luaL_checkudata(m_luaState, nIndex, tname);  }
+void			LuaWrapper::argcheck(bool bCondition, int nArgs, const char* szError)	{ luaL_argcheck(m_luaState, bCondition, nArgs, szError); }
 
 int				LuaWrapper::gettop()						{	return lua_gettop(m_luaState);				}
 void			LuaWrapper::settop(int nIndex)				{	lua_settop(m_luaState, nIndex);				}
@@ -91,6 +100,12 @@ void			LuaWrapper::pushValue(int nIndex)			{	lua_pushvalue(m_luaState, nIndex);	
 void			LuaWrapper::remove(int nIndex)				{	lua_remove(m_luaState, nIndex);				}
 void			LuaWrapper::replace(int nIndex)				{	lua_replace(m_luaState, nIndex);			}
 
+/* metatable 相关接口 */
+int				LuaWrapper::newmetatable(char const* szTName)	{ return luaL_newmetatable(m_luaState, szTName);  }
+void			LuaWrapper::getmetatable(char const* szTName)	{ luaL_getmetatable(m_luaState, szTName); }
+void			LuaWrapper::setmetatable(int nIndex)			{ lua_setmetatable(m_luaState, nIndex); }
+/* UserData 相关的接口 */
+void*			LuaWrapper::newuserdata(int nBytes)			{	return lua_newuserdata(m_luaState, nBytes);  }
 bool  LuaWrapper::loadString(const char* szLuaScript, bool bCall /*= true*/)
 {
 	int nErr;
@@ -523,8 +538,6 @@ failed:
 	return false;
 }
 
-
-
 bool LuaWrapper::registerFunc(const char* regFuncName, luaRegFunction regCFunc)
 {
 	lua_pushcfunction(m_luaState, (lua_CFunction)regCFunc);
@@ -532,6 +545,7 @@ bool LuaWrapper::registerFunc(const char* regFuncName, luaRegFunction regCFunc)
 
 	return true;
 }
+
 bool LuaWrapper::unregisterFunc(const char* unregFuncName)
 {
 	lua_pushnil(m_luaState);

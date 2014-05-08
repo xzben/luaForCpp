@@ -79,6 +79,7 @@ copy $(OutDir)..\source\*.h             $(OutDir)..\include\</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\source\baseType.h" />
     <ClInclude Include="..\..\..\source\config.h" />
     <ClInclude Include="..\..\..\source\LuaWrapper.h" />
   </ItemGroup>

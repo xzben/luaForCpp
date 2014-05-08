@@ -5,6 +5,5 @@ luaDouble 	= 1.2345567890;
 luaBool 	=  false;
 
 luaTable = {
-	
-
+	['tableField'] = function () print("luaTableFunctionCall"); end
 };

@@ -4,14 +4,9 @@
 
 #include <string>
 #include "config.h"
+#include "baseType.h"
 
-struct lua_State;
-BEGIN_NAMESPACE
-class LuaWrapper;
-typedef int(*luaRegFunction)(LuaWrapper lua);
-END_NAMESPACE
-typedef int(*lua_CFunction) (lua_State *L);
-
+extern struct lua_State;
 
 BEGIN_NAMESPACE
 
@@ -48,6 +43,7 @@ public:
 	inline	bool openDebug();
 	inline	bool openPackage();
 	inline	bool openAllLib();
+	inline  bool openLib(char const* szLibName, const luaLib_Reg* libTable, int nup);
 
 	bool loadString(const char* szLuaScript, bool bCall = true);
 	bool loadFile(const char* szLuaFile, bool bCall = true);
@@ -116,6 +112,13 @@ public:
 	inline bool  isUserData(int nIndex);
 	inline bool  isTable(int nIndex);
 	inline bool  isThread(int nIndex);
+
+	inline int			checkint(int nIndex); //检查索引index对应的是否是一个数字，并返回一个int值
+	inline double		checknumber(int nIndex);
+	inline long			checklong(int nIndex);
+	inline char const * checklstring(int nIndex, size_t *pnLen);
+	inline void*		checkudata(int nIndex, char const* tname);//检查索引index对应的元素是否是类型为tname的userdata，并返回userdata的地址
+	inline void			argcheck(bool bCondition, int nArgs, const char* szError);
 	/*
 	*	获取对应索引元素的类型ID
 	*	LUA_TNIL
@@ -133,8 +136,8 @@ public:
 	*/
 	inline double			toNumber(int nIndex);
 	inline std::string		toString(int nIndex);
-	inline bool			toBoolean(int nIndex);
-
+	inline bool				toBoolean(int nIndex);
+	inline void*			touserdata(int nIndex);
 	/*
 	*	栈操作接口
 	*/
@@ -166,6 +169,14 @@ public:
 	*	将栈顶元素弹出，然后设置给指定索引位置的元素值
 	*/
 	inline void			replace(int nIndex);
+
+	/* UserData 相关的接口 */
+	inline void*		newuserdata(int nBytes);
+
+	/* metatable 相关接口 */
+	inline int			newmetatable(char const* szTName);
+	inline void			getmetatable(char const* szTName);
+	inline void			setmetatable(int nIndex);
 protected:
 	bool loadTable(const char* szTableName);
 	bool doCallFunction(const char* sig, va_list vl);
