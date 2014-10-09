@@ -4,7 +4,6 @@
 	#include <lualib.h>
 	#include <lauxlib.h>
 };
-#pragma comment(lib, "lua.lib")
 #include "LuaWrapper.h"
 
 BEGIN_NAMESPACE

@@ -40,8 +40,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>..\..\..\output</OutDir>
-    <IncludePath>$(ProjectDir)..\..\lib\lua-5.2.3-src;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)..\..\lib\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)../../../source/lua-5.2.3;$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
     <CustomBuildAfterTargets>Build</CustomBuildAfterTargets>
     <CustomBuildBeforeTargets>Build</CustomBuildBeforeTargets>
   </PropertyGroup>
@@ -49,13 +49,13 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>H:\GitHub\luaForCpp\lib\lua-5.2.3-src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_LUAFORCPP_BUILD_;LUA_COMPAT_ALL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>H:\GitHub\luaForCpp\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Console</SubSystem>
     </Link>
     <CustomBuildStep>
@@ -79,12 +79,72 @@ copy $(OutDir)..\source\*.h             $(OutDir)..\include\</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\source\baseType.h" />
     <ClInclude Include="..\..\..\source\config.h" />
+    <ClInclude Include="..\..\..\source\lua-5.2.3\lapi.h" />
+    <ClInclude Include="..\..\..\source\lua-5.2.3\lauxlib.h" />
+    <ClInclude Include="..\..\..\source\lua-5.2.3\lcode.h" />
+    <ClInclude Include="..\..\..\source\lua-5.2.3\lctype.h" />
+    <ClInclude Include="..\..\..\source\lua-5.2.3\ldebug.h" />
+    <ClInclude Include="..\..\..\source\lua-5.2.3\ldo.h" />
+    <ClInclude Include="..\..\..\source\lua-5.2.3\lfunc.h" />
+    <ClInclude Include="..\..\..\source\lua-5.2.3\lgc.h" />
+    <ClInclude Include="..\..\..\source\lua-5.2.3\llex.h" />
+    <ClInclude Include="..\..\..\source\lua-5.2.3\llimits.h" />
+    <ClInclude Include="..\..\..\source\lua-5.2.3\lmem.h" />
+    <ClInclude Include="..\..\..\source\lua-5.2.3\lobject.h" />
+    <ClInclude Include="..\..\..\source\lua-5.2.3\lopcodes.h" />
+    <ClInclude Include="..\..\..\source\lua-5.2.3\lparser.h" />
+    <ClInclude Include="..\..\..\source\lua-5.2.3\lstate.h" />
+    <ClInclude Include="..\..\..\source\lua-5.2.3\lstring.h" />
+    <ClInclude Include="..\..\..\source\lua-5.2.3\ltable.h" />
+    <ClInclude Include="..\..\..\source\lua-5.2.3\ltm.h" />
+    <ClInclude Include="..\..\..\source\lua-5.2.3\lua.h" />
+    <ClInclude Include="..\..\..\source\lua-5.2.3\lua.hpp" />
+    <ClInclude Include="..\..\..\source\lua-5.2.3\luaconf.h" />
+    <ClInclude Include="..\..\..\source\lua-5.2.3\lualib.h" />
+    <ClInclude Include="..\..\..\source\lua-5.2.3\lundump.h" />
+    <ClInclude Include="..\..\..\source\lua-5.2.3\lvm.h" />
+    <ClInclude Include="..\..\..\source\lua-5.2.3\lzio.h" />
     <ClInclude Include="..\..\..\source\LuaWrapper.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\source\lua-5.2.3\lapi.c" />
+    <ClCompile Include="..\..\..\source\lua-5.2.3\lauxlib.c" />
+    <ClCompile Include="..\..\..\source\lua-5.2.3\lbaselib.c" />
+    <ClCompile Include="..\..\..\source\lua-5.2.3\lbitlib.c" />
+    <ClCompile Include="..\..\..\source\lua-5.2.3\lcode.c" />
+    <ClCompile Include="..\..\..\source\lua-5.2.3\lcorolib.c" />
+    <ClCompile Include="..\..\..\source\lua-5.2.3\lctype.c" />
+    <ClCompile Include="..\..\..\source\lua-5.2.3\ldblib.c" />
+    <ClCompile Include="..\..\..\source\lua-5.2.3\ldebug.c" />
+    <ClCompile Include="..\..\..\source\lua-5.2.3\ldo.c" />
+    <ClCompile Include="..\..\..\source\lua-5.2.3\ldump.c" />
+    <ClCompile Include="..\..\..\source\lua-5.2.3\lfunc.c" />
+    <ClCompile Include="..\..\..\source\lua-5.2.3\lgc.c" />
+    <ClCompile Include="..\..\..\source\lua-5.2.3\linit.c" />
+    <ClCompile Include="..\..\..\source\lua-5.2.3\liolib.c" />
+    <ClCompile Include="..\..\..\source\lua-5.2.3\llex.c" />
+    <ClCompile Include="..\..\..\source\lua-5.2.3\lmathlib.c" />
+    <ClCompile Include="..\..\..\source\lua-5.2.3\lmem.c" />
+    <ClCompile Include="..\..\..\source\lua-5.2.3\loadlib.c" />
+    <ClCompile Include="..\..\..\source\lua-5.2.3\lobject.c" />
+    <ClCompile Include="..\..\..\source\lua-5.2.3\lopcodes.c" />
+    <ClCompile Include="..\..\..\source\lua-5.2.3\loslib.c" />
+    <ClCompile Include="..\..\..\source\lua-5.2.3\lparser.c" />
+    <ClCompile Include="..\..\..\source\lua-5.2.3\lstate.c" />
+    <ClCompile Include="..\..\..\source\lua-5.2.3\lstring.c" />
+    <ClCompile Include="..\..\..\source\lua-5.2.3\lstrlib.c" />
+    <ClCompile Include="..\..\..\source\lua-5.2.3\ltable.c" />
+    <ClCompile Include="..\..\..\source\lua-5.2.3\ltablib.c" />
+    <ClCompile Include="..\..\..\source\lua-5.2.3\ltm.c" />
+    <ClCompile Include="..\..\..\source\lua-5.2.3\lua.c" />
+    <ClCompile Include="..\..\..\source\lua-5.2.3\lundump.c" />
+    <ClCompile Include="..\..\..\source\lua-5.2.3\lvm.c" />
+    <ClCompile Include="..\..\..\source\lua-5.2.3\lzio.c" />
     <ClCompile Include="..\..\..\source\LuaWrapper.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\source\lua-5.2.3\Makefile" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

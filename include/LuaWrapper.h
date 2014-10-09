@@ -4,11 +4,19 @@
 
 #include <string>
 #include "config.h"
-#include "baseType.h"
 
 extern struct lua_State;
 
 BEGIN_NAMESPACE
+
+class LuaWrapper;
+typedef int(*luaRegFunction)(LuaWrapper lua);
+
+// 此结构体必须与 luaL_Reg 的结构保持一致
+typedef struct luaLib_Reg {
+	const char		*name;
+	luaRegFunction	func;
+}luaLib_Reg;
 
 class EXP_IMP_DLL NoCopyable
 {
@@ -117,7 +125,7 @@ public:
 	inline double		checknumber(int nIndex);
 	inline long			checklong(int nIndex);
 	inline char const * checklstring(int nIndex, size_t *pnLen);
-	inline void*		checkudata(int nIndex, char const* tname);//检查索引index对应的元素是否是名为tname的userdata，并返回userdata的地址
+	inline void*		checkudata(int nIndex, char const* tname);//检查索引index对应的元素是否是类型为tname的userdata，并返回userdata的地址
 	inline void			argcheck(bool bCondition, int nArgs, const char* szError);
 	/*
 	*	获取对应索引元素的类型ID
